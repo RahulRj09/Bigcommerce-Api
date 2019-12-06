@@ -11,7 +11,9 @@ product.get("/getProduct/:id", productController.getProductById);
 
 product.put("/updateProduct/:id", productController.update);
 
-product.delete("/deleteProduct/:id",productController.delete);
+product.delete("/deleteProduct/:id", productController.delete);
+
+product.post("/createProduct", productController.create);
 
 module.exports = product;
 
