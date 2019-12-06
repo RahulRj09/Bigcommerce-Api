@@ -13,7 +13,7 @@ exports.createProducts = (req, res) => {
     productsArray = []
     axios.get('https://api.bigcommerce.com/stores/81wumtsb9/v3/catalog/products', config)
         .then((data) => {
-            productsData = data.data.data
+            let productsData = data.data.data
             for (let i = 0; i < productsData.length; i++) {
                 let product = {
                     productId: productsData[i].id,
@@ -92,4 +92,36 @@ exports.delete = (req, res) => {
             return res.send(err)
         }
     })
+}
+
+exports.create = (req, res) => {
+    let product = new products({
+        productId: req.body.productId,
+        name: req.body.name,
+        type: req.body.type,
+        sku: req.body.sku,
+        description: req.body.description,
+        weight: req.body.weight,
+        width: req.body.width,
+        depth: req.body.depth,
+        height: req.body.height,
+        price: req.body.price,
+        costPrice: req.body.costPrice,
+        retailPrice: req.body.retailPrice,
+        salePrice: req.body.salePrice,
+        mapPrice: req.body.mapPrice,
+        taxClassId: req.body.taxClassId,
+        productTaxCode: req.body.productTaxCode,
+        calculatedPrice: req.body.calculatedPrice,
+        inventoryLevel: req.body.inventoryLevel,
+        inventoryWarningLevel: req.body.inventoryWarningLevel,
+        inventoryTracking: req.body.inventoryTracking
+    })
+    product.save((err, success) => {
+        if (success) {
+            return res.send("Product Created successfully");
+        }
+        return res.send(err);
+    })
+
 }
