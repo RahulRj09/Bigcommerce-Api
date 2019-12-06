@@ -50,6 +50,24 @@ exports.createProducts = (req, res) => {
         })
 }
 
+exports.update = (req, res) => {
+    axios.put('https://api.bigcommerce.com/stores/81wumtsb9/v3/catalog/products/'
+        + req.params.id, req.body, config)
+        .then((data) => {
+            products.findOneAndUpdate({ productId: req.params.id },
+                { $set: req.body },
+                (err, success) => {
+                    if (success) {
+                        return res.send("Product Updated");
+                    } else {
+                        return res.send(err);
+                    }
+                });
+        }).catch((err) => {
+            return res.send(err);
+        })
+}
+
 exports.getProducts = (req, res) => {
     products.find()
         .then((result) => {
@@ -60,27 +78,16 @@ exports.getProducts = (req, res) => {
 }
 
 exports.getProductById = (req, res) => {
-    products.findOne({ productId: req.params.id }, (data, err) => {
-        if (data) {
-            return res.json(data)
-        }
-        else {
-            return res.send(err);
-        }
-    })
-
-}
-
-
-exports.update = (req, res) => {
-    axios.put('https://api.bigcommerce.com/stores/81wumtsb9/v3/catalog/products/' + req.params.id, req.body, config)
-        .then((data) => {
-            return res.send("Product Updated");
-        }).catch((err) => {
-            return res.send(err);
+    axios.get('https://api.bigcommerce.com/stores/81wumtsb9/v3/catalog/products/'
+        + req.params.id, config)
+        .then((success) => {
+            return res.json(success.data.data);
+        }).catch((error) => {
+            return res.send(error);
         })
-
 }
+
+
 
 exports.delete = (req, res) => {
     products.findOneAndRemove({ productId: req.params.id }, (err, success) => {
