@@ -73,15 +73,13 @@ exports.getProductById = (req, res) => {
 
 
 exports.update = (req, res) => {
-    products.findOneAndUpdate({ productId: req.params.id },
-        { $set: req.body },
-        (err, success) => {
-            if (success) {
-                return res.send("Product Updated");
-            } else {
-                return res.send(err);
-            }
-        });
+    axios.put('https://api.bigcommerce.com/stores/81wumtsb9/v3/catalog/products/' + req.params.id, req.body, config)
+        .then((data) => {
+            return res.send("Product Updated");
+        }).catch((err) => {
+            return res.send(err);
+        })
+
 }
 
 exports.delete = (req, res) => {
@@ -125,3 +123,9 @@ exports.create = (req, res) => {
     })
 
 }
+
+
+
+
+
+

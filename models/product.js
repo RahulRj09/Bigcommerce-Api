@@ -22,8 +22,6 @@ let products = new Schema({
     inventoryLevel: { type: Number },
     inventoryWarningLevel: { type: Number },
     inventoryTracking: { type: String }
-
-
 });
 
 module.exports = mongoose.model('products', products);
@@ -108,3 +106,4 @@ module.exports = mongoose.model('products', products);
 // "open_graph_use_product_name": true,
 // "open_graph_use_image": true
 // },
+
