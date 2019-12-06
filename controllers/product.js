@@ -90,13 +90,20 @@ exports.getProductById = (req, res) => {
 
 
 exports.delete = (req, res) => {
-    products.findOneAndRemove({ productId: req.params.id }, (err, success) => {
-        if (success) {
-            return res.send("Delete Product Successfully")
-        } else {
-            return res.send(err)
-        }
-    })
+    axios.delete('https://api.bigcommerce.com/stores/81wumtsb9/v3/catalog/products/'
+        + req.params.id, config)
+        .then((success) => {
+            products.findOneAndRemove({ productId: req.params.id }, (err, success) => {
+                if (success) {
+                    return res.send("Delete Product Successfully")
+                } else {
+                    return res.send(err)
+                }
+            })
+        }).catch((error)=>{
+            return res.send(error);
+        })
+
 }
 
 exports.create = (req, res) => {
