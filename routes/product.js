@@ -11,7 +11,7 @@ product.get("/getProduct/:id", productController.getProductById);
 
 product.put("/updateProduct/:id", productController.updateProduct);
 
-product.delete("/delete/:id",productController.delete)
+product.delete("/deleteProduct/:id",productController.delete);
 
 module.exports = product;
 

@@ -83,3 +83,13 @@ exports.updateProduct = (req, res) => {
             }
         });
 }
+
+exports.delete = (req, res) => {
+    products.findOneAndRemove({ productId: req.params.id }, (err, success) => {
+        if(success){
+            return res.send("Delete Product Successfully")
+        }else{
+            return res.send(err)
+        }
+    })
+}
