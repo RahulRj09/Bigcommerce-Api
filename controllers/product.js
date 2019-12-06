@@ -72,7 +72,7 @@ exports.getProductById = (req, res) => {
 }
 
 
-exports.updateProduct = (req, res) => {
+exports.update = (req, res) => {
     products.findOneAndUpdate({ productId: req.params.id },
         { $set: req.body },
         (err, success) => {
@@ -86,9 +86,9 @@ exports.updateProduct = (req, res) => {
 
 exports.delete = (req, res) => {
     products.findOneAndRemove({ productId: req.params.id }, (err, success) => {
-        if(success){
+        if (success) {
             return res.send("Delete Product Successfully")
-        }else{
+        } else {
             return res.send(err)
         }
     })

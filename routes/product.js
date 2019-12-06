@@ -9,7 +9,7 @@ product.get("/getProducts", productController.getProducts);
 
 product.get("/getProduct/:id", productController.getProductById);
 
-product.put("/updateProduct/:id", productController.updateProduct);
+product.put("/updateProduct/:id", productController.update);
 
 product.delete("/deleteProduct/:id",productController.delete);
 
