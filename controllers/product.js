@@ -79,13 +79,13 @@ exports.getProducts = (req, res) => {
 
 exports.getProductById = (req, res) => {
     products.findOne({ productId: req.params.id }, (data, err) => {
-            if (data) {
-                return res.json(data)
-            }
-            else {
-                return res.send(err);
-            }
-        })
+        if (data) {
+            return res.json(data)
+        }
+        else {
+            return res.send(err);
+        }
+    })
 }
 
 
@@ -108,32 +108,10 @@ exports.delete = (req, res) => {
 }
 
 exports.create = (req, res) => {
-    let product = new products({
-        productId: req.body.productId,
-        name: req.body.name,
-        type: req.body.type,
-        sku: req.body.sku,
-        description: req.body.description,
-        weight: req.body.weight,
-        width: req.body.width,
-        depth: req.body.depth,
-        height: req.body.height,
-        price: req.body.price,
-        costPrice: req.body.costPrice,
-        categories: req.body.categories,
-        retailPrice: req.body.retailPrice,
-        salePrice: req.body.salePrice,
-        mapPrice: req.body.mapPrice,
-        taxClassId: req.body.taxClassId,
-        productTaxCode: req.body.productTaxCode,
-        calculatedPrice: req.body.calculatedPrice,
-        inventoryLevel: req.body.inventoryLevel,
-        inventoryWarningLevel: req.body.inventoryWarningLevel,
-        inventoryTracking: req.body.inventoryTracking
-    })
+    let product = new products(req.body)
     axios.post("https://api.bigcommerce.com/stores/81wumtsb9/v3/catalog/products", product, config)
         .then((success) => {
-            product.productId = success.data.data.id;
+            product["productId"] = success.data.data.id;
             console.log(product.productId);
             product.save((err, done) => {
                 if (done) {
