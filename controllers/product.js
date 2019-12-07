@@ -8,7 +8,6 @@ let config = {
     }
 }
 
-
 exports.createProducts = (req, res) => {
     productsArray = []
     axios.get('https://api.bigcommerce.com/stores/81wumtsb9/v3/catalog/products', config)
@@ -27,6 +26,7 @@ exports.createProducts = (req, res) => {
                     height: productsData[i].height,
                     price: productsData[i].price,
                     costPrice: productsData[i].cost_price,
+                    categories: productsData[i].categories,
                     retailPrice: productsData[i].retail_price,
                     salePrice: productsData[i].sale_price,
                     mapPrice: productsData[i].map_price,
@@ -100,7 +100,7 @@ exports.delete = (req, res) => {
                     return res.send(err)
                 }
             })
-        }).catch((error)=>{
+        }).catch((error) => {
             return res.send(error);
         })
 
@@ -119,6 +119,7 @@ exports.create = (req, res) => {
         height: req.body.height,
         price: req.body.price,
         costPrice: req.body.costPrice,
+        categories: req.body.categories,
         retailPrice: req.body.retailPrice,
         salePrice: req.body.salePrice,
         mapPrice: req.body.mapPrice,
@@ -129,13 +130,17 @@ exports.create = (req, res) => {
         inventoryWarningLevel: req.body.inventoryWarningLevel,
         inventoryTracking: req.body.inventoryTracking
     })
-    product.save((err, success) => {
-        if (success) {
-            return res.send("Product Created successfully");
-        }
-        return res.send(err);
-    })
-
+    axios.post("https://api.bigcommerce.com/stores/81wumtsb9/v3/catalog/products", product, config)
+        .then((success) => {
+            product.save((err, success) => {
+                if (success) {
+                    return res.send("Product Created successfully");
+                }
+                return res.send(err);
+            })
+        }).catch((error) => {
+            return res.send(error);
+        })
 }
 
 

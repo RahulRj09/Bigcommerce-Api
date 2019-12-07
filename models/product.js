@@ -13,6 +13,7 @@ let products = new Schema({
     height: { type: Number },
     price: { type: Number },
     costPrice: { type: Number },
+    categories: [],
     retailPrice: { type: Number },
     salePrice: { type: Number },
     mapPrice: { type: Number },
