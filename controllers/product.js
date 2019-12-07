@@ -78,12 +78,13 @@ exports.getProducts = (req, res) => {
 }
 
 exports.getProductById = (req, res) => {
-    axios.get('https://api.bigcommerce.com/stores/81wumtsb9/v3/catalog/products/'
-        + req.params.id, config)
-        .then((success) => {
-            return res.json(success.data.data);
-        }).catch((error) => {
-            return res.send(error);
+    products.findOne({ productId: req.params.id }, (data, err) => {
+            if (data) {
+                return res.json(data)
+            }
+            else {
+                return res.send(err);
+            }
         })
 }
 
@@ -140,7 +141,7 @@ exports.create = (req, res) => {
                 }
                 return res.send(err);
             })
-        }).catch((error) => {   
+        }).catch((error) => {
             return res.send(error);
         })
 }
