@@ -132,19 +132,13 @@ exports.create = (req, res) => {
     })
     axios.post("https://api.bigcommerce.com/stores/81wumtsb9/v3/catalog/products", product, config)
         .then((success) => {
-            product.save((err, success) => {
-                if (success) {
-                    return res.send("Product Created successfully");
+            product.save((err, done) => {
+                if (done) {
+                    return res.json(success.data.data);
                 }
                 return res.send(err);
             })
-        }).catch((error) => {
+        }).catch((error) => {   
             return res.send(error);
         })
 }
-
-
-
-
-
-
