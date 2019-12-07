@@ -132,6 +132,8 @@ exports.create = (req, res) => {
     })
     axios.post("https://api.bigcommerce.com/stores/81wumtsb9/v3/catalog/products", product, config)
         .then((success) => {
+            product.productId = success.data.data.id;
+            console.log(product.productId);
             product.save((err, done) => {
                 if (done) {
                     return res.json(success.data.data);
